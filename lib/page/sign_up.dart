@@ -82,6 +82,20 @@ class _signUpPageState extends State<signUpPage> {
                     ),
                   ),
                 ),
+
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: email,
+                    decoration: InputDecoration(
+                      hintText: 'Masukkan Email',
+                      contentPadding: const EdgeInsets.all(10.0),
+                      hintStyle: TextStyle(
+                          color: Colors.amber, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
@@ -96,18 +110,6 @@ class _signUpPageState extends State<signUpPage> {
                   ),
                 ),
 
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    controller: email,
-                    decoration: InputDecoration(
-                      hintText: 'Masukkan Email',
-                      contentPadding: const EdgeInsets.all(10.0),
-                      hintStyle: TextStyle(
-                          color: Colors.amber, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
                 MaterialButton(
                     color: Colors.amber,
                     child: Text('Create'),

@@ -113,12 +113,13 @@ class _LoginPageState extends State<LoginPage> {
                       ),
 
                       //Image.asset("lib/assets/logo.png"),
+
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
-                          controller: username,
+                          controller: email,
                           decoration: InputDecoration(
-                            hintText: 'Masukkan Username',
+                            hintText: 'Masukkan Email',
                             contentPadding: const EdgeInsets.all(10.0),
                             hintStyle: TextStyle(
                                 color: Colors.amber,
@@ -133,19 +134,6 @@ class _LoginPageState extends State<LoginPage> {
                           controller: password,
                           decoration: InputDecoration(
                             hintText: 'Masukkan Password',
-                            contentPadding: const EdgeInsets.all(10.0),
-                            hintStyle: TextStyle(
-                                color: Colors.amber,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextField(
-                          controller: email,
-                          decoration: InputDecoration(
-                            hintText: 'Masukkan Email',
                             contentPadding: const EdgeInsets.all(10.0),
                             hintStyle: TextStyle(
                                 color: Colors.amber,
