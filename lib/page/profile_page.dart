@@ -53,9 +53,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 onPressed: () async {
                   //_logout();
                   //AuthServices service = AuthServices(FirebaseAuth.instance);
-                  //FirebaseAuth.instance.signOut();
+                  FirebaseAuth.instance.signOut();
                   final provider =
-                  Provider.of<GoogleSignInProvider>(context, listen: false);
+                      Provider.of<GoogleSignInProvider>(context, listen: false);
                   provider.logout();
                 }),
           ],

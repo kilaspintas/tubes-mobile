@@ -157,32 +157,15 @@ class _LoginPageState extends State<LoginPage> {
                           color: Colors.amber,
                           child: Text('Login'),
                           onPressed: () async {
-                            // if (username.text.isNotEmpty &&
-                            //     password.text.isNotEmpty) {
-                            //   getDataUser();
-                            // } else
-                            // if (username.text.isNotEmpty &&
-                            //     password.text.isNotEmpty &&
-                            //     email.text.isNotEmpty) {
-                            //   signIn();
-                            //}
-                            // else {
-                            //   ScaffoldMessenger.of(context).showSnackBar(
-                            //       SnackBar(
-                            //           content:
-                            //               Text('Semua input harus Diisi !!')));
-                            // }
-
-                            final provider =
-                            Provider.of<GoogleSignInProvider>(context, listen: false);
-                            provider.googleLogin();
-
-                            /* if(usernameController.toString() == DummyData.data.map((data){"${data['username']}";}) ){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
-                        }else{
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => KosongPage()));
-                        }
-                */
+                            if (password.text.isNotEmpty &&
+                                email.text.isNotEmpty) {
+                              signIn();
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content:
+                                          Text('Semua input harus Diisi !!')));
+                            }
                           }),
 
                       Padding(
@@ -211,6 +194,28 @@ class _LoginPageState extends State<LoginPage> {
                             },
                             child: Text(
                               "Create an Account",
+                              style: TextStyle(
+                                color: Colors.blue,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Center(
+                          child: GestureDetector(
+                            onTap: () async {
+                              final provider =
+                                  Provider.of<GoogleSignInProvider>(context,
+                                      listen: false);
+                              provider.googleLogin();
+                            },
+                            child: Text(
+                              "or click here to signup with google account !",
                               style: TextStyle(
                                 color: Colors.blue,
                                 decoration: TextDecoration.underline,

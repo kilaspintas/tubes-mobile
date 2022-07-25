@@ -7,6 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:ui_color_note/main.dart';
 
 import 'package:ui_color_note/page/main_page.dart';
 
