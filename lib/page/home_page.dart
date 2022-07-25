@@ -7,17 +7,22 @@ import 'package:ui_color_note/models/NotesOperation.dart';
 import 'package:http/http.dart' as http;
 import '../models/add_edit_note_widget.dart';
 
-class HomePage extends StatelessWidget {
+const String apiUrl = 'http://10.0.2.2:8000/api/notes';
+Future<List<dynamic>> _fetchDataUsers() async {
+  var hasil = await http.get(Uri.parse(apiUrl));
+  return json.decode(hasil.body)['data'];
+}
 
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
-    const String apiUrl = 'http://10.0.2.2:8000/api/notes';
 
-    Future<List<dynamic>> _fetchDataUsers() async{
-      var hasil = await http.get(Uri.parse(apiUrl));
-      return json.decode(hasil.body)['data'];
-    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0x00f1f1f1),
@@ -30,72 +35,85 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      body: FutureBuilder<List<dynamic>>(
-        future: _fetchDataUsers(),
-        builder: (BuildContext context, AsyncSnapshot snapshot){
-          if (snapshot.hasData){
-            return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (BuildContext contect, int index){
-                return Dismissible(
-                  key: Key(snapshot.data[index]['id'].toString()),
-                  background: Container(
-                    color: Colors.red.shade300,
-                    child: const Center(
-                      child: Text(
-                        "Hapus ?",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+      body: RefreshIndicator(
+        onRefresh: () {
+          return Future(() {
+            setState(() {});
+          });
+        },
+        child: FutureBuilder<List<dynamic>>(
+          future: _fetchDataUsers(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (BuildContext contect, int index) {
+                  return Dismissible(
+                    key: Key(snapshot.data[index]['id'].toString()),
+                    background: Container(
+                      color: Colors.red.shade300,
+                      child: const Center(
+                        child: Text(
+                          "Hapus ?",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  child: Card(
-                    child: Column(
-                      children: [
-                        snapshot.data[index]['email'] == user.email ?
-                        ListTile(
-                          title:  Text(snapshot.data[index]['judul'],
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),),
-                          subtitle: Text(snapshot.data[index]['deskripsi'],
-                            style: const TextStyle(
-                              fontSize: 16,
-                            ),),
-                          onTap: (){
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AddEditNoteWidget(
-                                    title: "Edit Data",
-                                    id : snapshot.data[index]['id'].toString(),
-                                  );
-                                });
-                          },
-                        )
-                        : Container( ),
-                      ],
+                    child: Card(
+                      child: Column(
+                        children: [
+                          snapshot.data[index]['email'] == user.email
+                              ? ListTile(
+                                  title: Text(
+                                    snapshot.data[index]['judul'],
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    snapshot.data[index]['deskripsi'],
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AddEditNoteWidget(
+                                            title: "Edit Data",
+                                            id: snapshot.data[index]['id']
+                                                .toString(),
+                                          );
+                                        });
+                                  },
+                                )
+                              : Container(),
+                        ],
+                      ),
                     ),
-                  ),
-                  onDismissed: (direction){
-                    String idnya = snapshot.data[index]['id'].toString();
-                    String url = 'http://10.0.2.2:8000/api/notes/delete/$idnya';
-                    Future _fetchDataUsers() async{
-                      var hasil = await http.get(Uri.parse(url));
-                      return json.decode(hasil.body)['message'];
-                    }
-                    _fetchDataUsers();
+                    onDismissed: (direction) {
+                      String idnya = snapshot.data[index]['id'].toString();
+                      String url =
+                          'http://10.0.2.2:8000/api/notes/delete/$idnya';
+                      Future _fetchDataUsers() async {
+                        var hasil = await http.get(Uri.parse(url));
+                        return json.decode(hasil.body)['message'];
+                      }
 
-                  },
-                );
-              },
-            );
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
+                      _fetchDataUsers();
+                    },
+                  );
+                },
+              );
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color.fromARGB(236, 243, 171, 5),
@@ -103,8 +121,7 @@ class HomePage extends StatelessWidget {
           showDialog(
               context: context,
               builder: (context) {
-                return const AddEditNoteWidget(
-                  title: "Tambah Note");
+                return const AddEditNoteWidget(title: "Tambah Note");
               });
 
           // Navigator.push(
