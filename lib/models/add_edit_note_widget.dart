@@ -96,7 +96,7 @@ class AddEditNoteWidget extends StatelessWidget {
                 String inputJudul = _judul.text;
                 String inputDeskripsi = _deskripsi.text;
                 String? idnya = id;
-                String url = 'http://10.0.2.2:8000/api/notes/update/$idnya?email=$email&nama=$nama&judul=$inputJudul&deskripsi=$inputDeskripsi';
+                String url = 'https://660e-180-248-29-38.ap.ngrok.io/api/notes/update/$idnya?email=$email&nama=$nama&judul=$inputJudul&deskripsi=$inputDeskripsi';
                 Future _fetchDataUsers() async{
                   await http.post(Uri.parse(url));
                 }
@@ -108,7 +108,7 @@ class AddEditNoteWidget extends StatelessWidget {
                 String inputJudul = _judul.text;
                 String inputDeskripsi = _deskripsi.text;
                 String? idnya = id;
-                String url = 'http://10.0.2.2:8000/api/notes/create?email=$email&nama=$nama&judul=$inputJudul&deskripsi=$inputDeskripsi';
+                String url = 'https://660e-180-248-29-38.ap.ngrok.io/api/notes/create?email=$email&nama=$nama&judul=$inputJudul&deskripsi=$inputDeskripsi';
                 Future _fetchDataUsers() async{
                   await http.post(Uri.parse(url));
                 }
