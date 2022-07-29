@@ -7,7 +7,7 @@ import 'package:ui_color_note/models/NotesOperation.dart';
 import 'package:http/http.dart' as http;
 import '../models/add_edit_note_widget.dart';
 
-const String apiUrl = 'http://10.0.2.2:8000/api/notes';
+const String apiUrl = 'https://660e-180-248-29-38.ap.ngrok.io/api/notes';
 Future<List<dynamic>> _fetchDataUsers() async {
   var hasil = await http.get(Uri.parse(apiUrl));
   return json.decode(hasil.body)['data'];
@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                     onDismissed: (direction) {
                       String idnya = snapshot.data[index]['id'].toString();
                       String url =
-                          'http://10.0.2.2:8000/api/notes/delete/$idnya';
+                          'https://660e-180-248-29-38.ap.ngrok.io/api/notes/delete/$idnya';
                       Future _fetchDataUsers() async {
                         var hasil = await http.get(Uri.parse(url));
                         return json.decode(hasil.body)['message'];
